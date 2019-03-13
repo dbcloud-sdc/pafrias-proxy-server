@@ -1,7 +1,6 @@
 require('newrelic');
 const express = require('express');
 const request = require('request');
-const { url } = require('./config.js')
 
 const PORT = process.env.PORT || 80;
 
@@ -16,13 +15,13 @@ app.get('/loaderio-f18acd640ba89b9eb3cefecdf550ce8b', (req, res) => {
 });
 
 app.use('/api', (req, res) => {
-  var url = url + req.url;
-  request(url).pipe(res);
-})
+  // console.log(req.path, req.url, req.originalUrl, req.baseUrl);
+  request(url + req.originalUrl).pipe(res);
+});
 
 app.listen(PORT, () => {
   console.log(`Proxy listening to ${PORT}`)
-})
+});
 
 /*
 router.get('/:songId/comments', (req, res) => {
