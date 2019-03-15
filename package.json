@@ -1,0 +1,32 @@
+{
+  "name": "pafrias-proxy-server",
+  "version": "1.0.0",
+  "description": "Not much to see here",
+  "main": "index.js",
+  "dependencies": {
+    "compress": "^0.99.0",
+    "express": "^4.16.4",
+    "newrelic": "^5.6.1",
+    "path": "^0.12.7",
+    "request": "^2.88.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dbcloud-sdc/pafrias-proxy-server.git"
+  },
+  "keywords": [
+    "proxy",
+    "dbcloud",
+    "comments"
+  ],
+  "author": "Pablo Frias",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dbcloud-sdc/pafrias-proxy-server/issues"
+  },
+  "homepage": "https://github.com/dbcloud-sdc/pafrias-proxy-server#readme"
+}
