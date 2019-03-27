@@ -1,10 +1,9 @@
 require('newrelic');
 import express from 'express';
-import request from 'request';
 import path from 'path';
+import router from './app/controllers/router';
 
 const PORT = process.env.PORT || 80;
-const url = process.env.microserviceurl || 'http://localhost:3000';
 
 const app = express();
 
@@ -21,9 +20,7 @@ app.get('/song/:songId', (req,res) => {
   res.status(200).send(frontEnd);
 })
 
-app.use('/api', (req, res) => {
-  request(url + req.originalUrl).pipe(res);
-});
+app.use('/api/song/:songId', router);
 
 app.listen(PORT, () => {
   console.log(`Proxy listening to ${PORT}`)
