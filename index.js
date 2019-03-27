@@ -1,52 +1,30 @@
 require('newrelic');
-const express = require('express');
-const request = require('request');
-const path = require('path');
+import express from 'express';
+import request from 'request';
+import path from 'path';
 
 const PORT = process.env.PORT || 80;
-
-const url = process.env.serviceurl || 'http://localhost:3000';
+const url = process.env.microserviceurl || 'http://localhost:3000';
 
 const app = express();
 
-// fill in file route for static assets
+app.use(express.static(path.resolve(__dirname, 'dist')));
 
-app.get('/loaderio-f18acd640ba89b9eb3cefecdf550ce8b', (req, res) => {
-  res.sendFile(path.resolve(__dirname, './loaderio.txt'));
-});
+import config from './config';
+import { attachBundles } from './app/helpers/bundleLoader.js';
+const services = attachBundles(config, './app/models/services', './dist/services');
+
+import { renderClientPage } from './app/models/template';
+
+app.get('/song/:songId', (req,res) => {
+  const frontEnd = renderClientPage(services);
+  res.status(200).send(frontEnd);
+})
 
 app.use('/api', (req, res) => {
-  // console.log(req.path, req.url, req.originalUrl, req.baseUrl);
   request(url + req.originalUrl).pipe(res);
 });
 
 app.listen(PORT, () => {
   console.log(`Proxy listening to ${PORT}`)
 });
-
-/*
-router.get('/:songId/comments', (req, res) => {
-  const { songId } = req.params;
-  retrieve(songId)
-    .then(data => resetExpiration(songId)
-      .then(() => {
-        res.status(200).send(data);
-      })
-      .catch(() => {
-        console.log('error reseting expiration');
-      }))
-    .catch(() => db.readComments(songId)
-      .then((data) => {
-        cache(songId, data)
-          .then(() => {
-            res.status(200).send(data);
-          })
-          .catch((err) => {
-            res.status(500).send(err);
-          });
-      })
-      .catch((err) => {
-        res.status(500).send(err);
-      }));
-});
-*/
