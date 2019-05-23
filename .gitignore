@@ -1,8 +1,10 @@
 ## MAC files ##
 .DS_Store
+
+## CONFIG ##
 loaderio.txt
+**newrelic**
+**config.js
 
 ## NPM ##
 node_modules/
-**config.js
-**newrelic**
